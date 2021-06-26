@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 import requests, json, os, random
 
 app = Flask(__name__)
@@ -13,6 +13,10 @@ def search():
 
 @app.route('/', methods = ['POST', 'GET'])
 def get_recommendations():
+
+    if request.form.get('action1') == 'LOGO':
+        return redirect(url_for("search"))
+
     seed_genres = 'pop'
     seed_artists = 'null'
     seed_tracks = 'null'
@@ -127,5 +131,5 @@ def get_recommendations():
             info.append(artist['name'])
         name_artist[item['name']] = info #adds artists to each song name (name is key)
         
-    return name_artist #returns dictionary
+    return name_artist
 
