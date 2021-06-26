@@ -1,11 +1,11 @@
 from flask import Flask, request, render_template
-import requests, json, flask
+import requests, json, os
 
 app = Flask(__name__)
 
 url = "https://language.googleapis.com/v1beta2/documents:analyzeSentiment"
 access_url = "https://accounts.spotify.com/api/token"
-key = "?key="
+key = "?key=" + str(os.environ["CLOUD_KEY"])
 
 @app.route('/')
 def search():
@@ -42,8 +42,8 @@ def get_recommendations():
         seed_tracks = '1TQXIltqoZ5XXyfCbAeSQQ'
         seed_artists = '4xnihxcoXWK3UqryOSnbw5'
 
-    CLIENT_ID = ''
-    CLIENT_SECRET = ''
+    CLIENT_ID = str(os.environ["CLIENT_ID"])
+    CLIENT_SECRET = str(os.environ["CLIENT_SECRET"])
 
     AUTH_URL = 'https://accounts.spotify.com/api/token'
 
