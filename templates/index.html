@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Test</title>
-</head>
+<title>My Mood Melody</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1 {font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+.bgimg {
+  background-image: url('https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/record-player-1605298086.jpg?crop=1.00xw:0.747xh;0,0.105xh&resize=1200:*');
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+</style>
 <body>
-    <div class='title'>
-        <h1>Beans</h1>
-    </div>
-</body>
 
+<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+  <div class="w3-display-topleft w3-padding-large w3-xlarge">
+    Logo
+  </div>
+  <div class="w3-display-middle">
+    <h2 class="w3-large w3-center">What's on your mind?</h2>
+    <form action="/action_page.php">
+        <label for="query">Search for something...</label>
+        <input type="text" id="query" name="query"><br><br>
+        <input type="submit" value="Submit">
+      </form>
+    <h1 class="w3-jumbo w3-animate-top">COMING SOON</h1>
+    <hr class="w3-border-grey" style="margin:auto;width:40%">
+  </div>
+</div>
+
+</body>
 </html>
