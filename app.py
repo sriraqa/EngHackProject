@@ -28,46 +28,34 @@ def get_recommendations():
     with app.test_request_context():
         r = requests.post(url + key, headers = headers, data = json.dumps(pload))
         rd = r.json()
-        #return str(rd['documentSentiment']['score'])
 
     score = rd['documentSentiment']['score']
     magnitude = rd['documentSentiment']['magnitude']
 
-    #TODO:add to the magnitude when there are exclaimation marks
-    # sentences = rd['sentences']
-    # sentences_dict = json.load(sentences)
-    # content = ""
-    # for item in sentences_dict:
-    #     content = sentences_dict.get(item)
-    #     magnitude += (0.1 * content.count('!'))
+    sentences = json.loads(r.text)
+    content = ""
+    for item in sentences['sentences']:
+        content = item['text']['content']
+        magnitude += (0.1 * content.count('!'))
 
     a = 0.5
     b = -0.4
 
-    if score > a:
+    if score > a and magnitude > 1.0: #very positive (Happy - Pharrell William)
         seed_tracks = '60nZcImufyMA1MKQY3dcCH'
         seed_artists = '6veTV9sF06FBf2KN0xAdvo'
-    elif score > b:
-        seed_tracks = '4CxmynXhw78QefruycvxG8'
-        seed_artists = '3ApUX1o6oSz321MMECyIYd'
-    else:
+    elif score < b and magnitude > 2.0: #very negative (Dancing With Your Ghost - Sasha Sloan)
         seed_tracks = '1TQXIltqoZ5XXyfCbAeSQQ'
         seed_artists = '4xnihxcoXWK3UqryOSnbw5'
-
-    # if score > a and magnitude > 1.0: #very positive
-    #     seed_genres = "pop,disco,happy,country,work-out"
-    # elif score < b and magnitude > 2.0: #very negative
-    #     seed_genres = "sad,blues,emo,grunge,alt-rock"
-    # elif magnitude == 0.0: #neutral/chill
-    #     seed_genres = "classical,jazz,chill,study,minimal-techno"
-    # elif score < 0.0: #slightly negative
-    #     seed_genres = "trance,ambient,indie,alternative"
-    # else: #slightly positive
-    #     seed_genres = "disney,opera,rock,indie-pop,r-n-b"
-
-    print(seed_genres)
-    print(score)
-    print(magnitude)
+    elif magnitude == 0.0: #neutral/chill (Coffee - Quinn XCII)
+        seed_tracks = '4CxmynXhw78QefruycvxG8'
+        seed_artists = '3ApUX1o6oSz321MMECyIYd'
+    elif score < 0.0: #slightly negative (Born To Die - Lana Del Rey)
+        seed_tracks = '487OPlneJNni3NWC8SYqhW'
+        seed_artists = '00FQb4jTyendYWaN8pK0wa'
+    else: #slightly positive (Free Love - HONNE)
+        seed_tracks = '0GPJSHYaXh8rZSSJoUMgyl'
+        seed_artists = '0Vw76uk7P8yVtTClWyOhac'
 
     CLIENT_ID = str(os.environ["CLIENT_ID"])
     CLIENT_SECRET = str(os.environ["CLIENT_SECRET"])
@@ -127,6 +115,7 @@ def get_recommendations():
 
     recommendation_endpoint = 'recommendations?' + 'seed_artists='+ seed_artists + '&seed_genres=' + seed_genres + '&seed_tracks=' + seed_tracks
     added_features = '&danceability=' + str(r_danceability) + '&valence=' + str(r_valence) + '&instrumentalness=' +str(r_instrumentalness) + '&liveness=' + str(r_liveness) + '&speechiness=' + str(r_speechiness)
+    
     recommendation_req = requests.get(BASE_URL + recommendation_endpoint + added_features, headers = headers)
     recommendation_json = json.loads(recommendation_req.text)
     recommend_items = recommendation_json['tracks']
@@ -140,6 +129,3 @@ def get_recommendations():
         
     return name_artist #returns dictionary
 
-@app.route('/homepage')
-def home():
-    return render_template('index.html')
