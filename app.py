@@ -11,7 +11,7 @@ key = "?key=" + str(os.environ["CLOUD_KEY"])
 def search():
     return render_template('index.html')
 
-@app.route('/results/', methods = ['POST', 'GET'])
+@app.route('/', methods = ['POST', 'GET'])
 def get_recommendations():
     seed_genres = 'pop'
     seed_artists = 'null'
