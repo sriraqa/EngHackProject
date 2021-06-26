@@ -13,7 +13,7 @@ def search():
 
 @app.route('/', methods = ['POST', 'GET'])
 def get_recommendations():
-    seed_genres = 'pop/'
+    seed_genres = 'pop'
     seed_artists = 'null'
     seed_tracks = 'null'
 
@@ -29,18 +29,45 @@ def get_recommendations():
         r = requests.post(url + key, headers = headers, data = json.dumps(pload))
         rd = r.json()
         #return str(rd['documentSentiment']['score'])
-    a = 0.5
-    b = -0.5
 
-    if rd['documentSentiment']['score'] > a:
+    score = rd['documentSentiment']['score']
+    magnitude = rd['documentSentiment']['magnitude']
+
+    #TODO:add to the magnitude when there are exclaimation marks
+    # sentences = rd['sentences']
+    # sentences_dict = json.load(sentences)
+    # content = ""
+    # for item in sentences_dict:
+    #     content = sentences_dict.get(item)
+    #     magnitude += (0.1 * content.count('!'))
+
+    a = 0.5
+    b = -0.4
+
+    if score > a:
         seed_tracks = '60nZcImufyMA1MKQY3dcCH'
         seed_artists = '6veTV9sF06FBf2KN0xAdvo'
-    elif rd['documentSentiment']['score'] > b:
+    elif score > b:
         seed_tracks = '4CxmynXhw78QefruycvxG8'
         seed_artists = '3ApUX1o6oSz321MMECyIYd'
     else:
         seed_tracks = '1TQXIltqoZ5XXyfCbAeSQQ'
         seed_artists = '4xnihxcoXWK3UqryOSnbw5'
+
+    # if score > a and magnitude > 1.0: #very positive
+    #     seed_genres = "pop,disco,happy,country,work-out"
+    # elif score < b and magnitude > 2.0: #very negative
+    #     seed_genres = "sad,blues,emo,grunge,alt-rock"
+    # elif magnitude == 0.0: #neutral/chill
+    #     seed_genres = "classical,jazz,chill,study,minimal-techno"
+    # elif score < 0.0: #slightly negative
+    #     seed_genres = "trance,ambient,indie,alternative"
+    # else: #slightly positive
+    #     seed_genres = "disney,opera,rock,indie-pop,r-n-b"
+
+    print(seed_genres)
+    print(score)
+    print(magnitude)
 
     CLIENT_ID = str(os.environ["CLIENT_ID"])
     CLIENT_SECRET = str(os.environ["CLIENT_SECRET"])
@@ -67,10 +94,19 @@ def get_recommendations():
     audio_json = audio_req.json()
 
     recommendation_endpoint = 'recommendations?' + 'seed_artists='+ seed_artists + '&seed_genres=' + seed_genres + '&seed_tracks=' + seed_tracks
+    added_features = '&'
     recommendation_req = requests.get(BASE_URL + recommendation_endpoint, headers = headers)
-    recommendation_json = recommendation_req.json()
+    recommendation_json = json.loads(recommendation_req.text)
+    recommend_items = recommendation_json['tracks']
 
-    return recommendation_json
+    name_artist = dict()
+    for item in recommend_items:
+        artists = []
+        for artist in item['artists']:
+            artists.append(artist['name'])
+        name_artist[item['name']] = artists
+        
+    return name_artist
 
 @app.route('/homepage')
 def home():
