@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-import requests, json, os
+import requests, json, os, random
 
 app = Flask(__name__)
 
@@ -93,20 +93,52 @@ def get_recommendations():
     audio_req = requests.get(BASE_URL + 'audio-features/' + seed_tracks, headers = headers)
     audio_json = audio_req.json()
 
+    r_danceability = random.uniform(audio_json["danceability"]-0.1, audio_json["danceability"]+0.1)
+    r_instrumentalness = random.uniform(audio_json["instrumentalness"]-0.1, audio_json["instrumentalness"]+0.1)
+    r_liveness = random.uniform(audio_json["liveness"]-0.1, audio_json["liveness"]+0.1)
+    r_speechiness = random.uniform(audio_json["speechiness"]-0.1, audio_json["speechiness"]+0.1)
+    r_valence = random.uniform(audio_json["valence"]-0.1, audio_json["valence"]+0.1)
+ 
+    if r_danceability > 1:
+        r_danceability = 1
+    elif r_danceability < 0:
+        r_danceability = 0
+ 
+    if r_instrumentalness > 1:
+        r_instrumentalness = 1
+    elif r_instrumentalness < 0:
+        r_instrumentalness = 0
+ 
+    if r_liveness > 1:
+        r_liveness = 1
+    elif r_liveness < 0:
+        r_liveness = 0
+ 
+    if r_speechiness > 1:
+        r_speechiness = 1
+    elif r_speechiness < 0:
+        r_speechiness = 0
+ 
+    if r_valence > 1:
+        r_valence = 1
+    elif r_valence < 0:
+        r_valence = 0
+
+
     recommendation_endpoint = 'recommendations?' + 'seed_artists='+ seed_artists + '&seed_genres=' + seed_genres + '&seed_tracks=' + seed_tracks
-    added_features = '&'
-    recommendation_req = requests.get(BASE_URL + recommendation_endpoint, headers = headers)
+    added_features = '&danceability=' + str(r_danceability) + '&valence=' + str(r_valence) + '&instrumentalness=' +str(r_instrumentalness) + '&liveness=' + str(r_liveness) + '&speechiness=' + str(r_speechiness)
+    recommendation_req = requests.get(BASE_URL + recommendation_endpoint + added_features, headers = headers)
     recommendation_json = json.loads(recommendation_req.text)
     recommend_items = recommendation_json['tracks']
 
-    name_artist = dict()
+    name_artist = dict() #store the name with artist in each item
     for item in recommend_items:
-        artists = []
-        for artist in item['artists']:
-            artists.append(artist['name'])
-        name_artist[item['name']] = artists
+        info = [] #creates new list for each song
+        for artist in item['artists']: #adds all the artists
+            info.append(artist['name'])
+        name_artist[item['name']] = info #adds artists to each song name (name is key)
         
-    return name_artist
+    return name_artist #returns dictionary
 
 @app.route('/homepage')
 def home():
