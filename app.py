@@ -123,21 +123,27 @@ def get_recommendations():
     recommendation_req = requests.get(BASE_URL + recommendation_endpoint + added_features, headers = headers)
     recommendation_json = json.loads(recommendation_req.text)
     recommend_items = recommendation_json['tracks']
+    recommend_album = recommend_items[0]['album']
 
     name_artist = dict() #store the name with artist in each item
     info = []
+    image = ""
     for item in recommend_items:
         artists = [] #creates new list for each song
         info.append(item['external_urls']['spotify'])
         for artist in item['artists']: #adds all the artists
             artists.append(artist['name'])
         name_artist[item['name']] = artists #adds artists to each song name (name is key)
-        
+    
+    image = recommend_album['images'][0]['url']
+
+    print(image)
+
     base = "https://open.spotify.com/embed/track/"
 
     for i in range(10):
         info[i] = base + info[i][len("https://open.spotify.com/track/"):]
 
 
-    return render_template('results.html', spotify_link=info)
+    return render_template('results.html', spotify_link=info, album_image=image)
 

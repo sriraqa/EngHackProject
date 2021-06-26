@@ -28,7 +28,9 @@ h1 {
   }
   
 
-  .container {max-width: 1200px;}
+  .container {
+      max-width: 1200px;
+  }
 
   .contact100-form {
     width: 100%;
@@ -40,7 +42,7 @@ h1 {
     position: relative;
     background-color: transparent;
     height: 50px;
-    border: 2px solid rgba(255,255,255,0.5);
+    border: 2px solid #ffffff80;
     border-radius: 25px;
   }
   

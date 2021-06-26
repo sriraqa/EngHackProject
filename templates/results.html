@@ -9,7 +9,7 @@
 body,h1 {font-family: "Raleway", sans-serif}
 body, html {height: 100%}
 .parallax {
-  background-image: url('https://images.unsplash.com/photo-1488841714725-bb4c32d1ac94?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cmV0cm8lMjBtdXNpY3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80');
+  background-image: url("{{ album_image }}");
   min-height: 100%;
   background-attachment: fixed;
   background-position: center;
@@ -18,13 +18,13 @@ body, html {height: 100%}
 }
 </style>
 <body>
+<div class="w3-display-topleft w3-padding-large w3-xlarge w3-hover">
+  <form method="POST" action="/">
+      <input type="submit" value="LOGO" name="action1"/>
+  </form>
+</div>
 <div class="parallax"></div>
 <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
-  <div class="w3-display-topleft w3-padding-large w3-xlarge w3-hover">
-    <form method="POST" action="/">
-        <input type="submit" value="LOGO" name="action1"/>
-    </form>
-  </div>
   <div class="w3-display-bottomleft">
     <iframe src="{{ spotify_link[0] }}" width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
   </div>
