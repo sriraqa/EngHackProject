@@ -66,11 +66,11 @@ def get_recommendations():
     audio_req = requests.get(BASE_URL + 'audio-features/' + seed_tracks, headers = headers)
     audio_json = audio_req.json()
 
-    # recommendation_endpoint = 'recommendations/' #+ seed_artists +'&' + seed_genres + '&' + seed_tracks
-    # recommendation_req = requests.get(BASE_URL + recommendation_endpoint, headers = headers)
-    # recommendation_json = recommendation_req.json()
+    recommendation_endpoint = 'recommendations?' + 'seed_artists='+ seed_artists + '&seed_genres=' + seed_genres + '&seed_tracks=' + seed_tracks
+    recommendation_req = requests.get(BASE_URL + recommendation_endpoint, headers = headers)
+    recommendation_json = recommendation_req.json()
 
-    return audio_json
+    return recommendation_json
 
 @app.route('/homepage')
 def home():
