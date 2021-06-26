@@ -24,15 +24,11 @@ body, html {height: 100%}
     </form>
   </div>
   <div class="w3-display-middle">
-    <h2 class="w3-large w3-center">What's on your mind?</h2>
+    <h2 class="w3-large w3-center">Results</h2>
 
-    <form method="POST">
-        <label for="query"></label>
-        <input name="text-content">
-        <input type="submit" value="Search">
-      </form>
-    <h1 class="w3-jumbo w3-animate-top">COMING SOON</h1>
-    <hr class="w3-border-grey" style="margin:auto;width:40%">
+    {% for i in range(20) %}
+      <iframe src="{{ spotify_link[i] }}" width="100%" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+    {% endfor %}
   </div>
 </div>
 

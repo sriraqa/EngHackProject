@@ -66,20 +66,6 @@ def get_recommendations():
 
     AUTH_URL = 'https://accounts.spotify.com/api/token'
 
-    auth_response = requests.post(AUTH_URL, {
-        'grant_type': 'client_credentials',
-        'client_id': CLIENT_ID,
-        'client_secret': CLIENT_SECRET,
-    })
-
-    auth_response_data = auth_response.json()
-
-    access_token = auth_response_data['access_token']
-
-    headers = {
-    'Authorization': 'Bearer {token}'.format(token = access_token)
-    }
-
     BASE_URL = 'https://api.spotify.com/v1/'
 
     audio_req = requests.get(BASE_URL + 'audio-features/' + seed_tracks, headers = headers)
@@ -125,11 +111,18 @@ def get_recommendations():
     recommend_items = recommendation_json['tracks']
 
     name_artist = dict() #store the name with artist in each item
+    info = []
     for item in recommend_items:
-        info = [] #creates new list for each song
+        artists = [] #creates new list for each song
+        info.append(item['external_urls']['spotify'])
         for artist in item['artists']: #adds all the artists
-            info.append(artist['name'])
-        name_artist[item['name']] = info #adds artists to each song name (name is key)
+            artists.append(artist['name'])
+        name_artist[item['name']] = artists #adds artists to each song name (name is key)
         
-    return name_artist
+    base = "https://open.spotify.com/embed/track/"
+
+    for i in range(20):
+        info[i] = base + info[i][len("https://open.spotify.com/track/"):]
+
+    return render_template('results.html', spotify_link=info)
 
