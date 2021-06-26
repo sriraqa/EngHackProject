@@ -42,24 +42,30 @@ def get_recommendations():
         content = item['text']['content']
         magnitude += (0.1 * content.count('!'))
 
+    bgimage = ""
     a = 0.5
-    b = -0.4
+    b = -0.5
 
     if score > a and magnitude > 1.0: #very positive (Happy - Pharrell William)
         seed_tracks = '60nZcImufyMA1MKQY3dcCH'
         seed_artists = '6veTV9sF06FBf2KN0xAdvo'
-    elif score < b and magnitude > 2.0: #very negative (Dancing With Your Ghost - Sasha Sloan)
+        bgimage = "https://static.vecteezy.com/system/resources/thumbnails/001/820/803/small/dark-green-yellow-gradient-blur-drawing-vector.jpg"
+    elif score < b and magnitude > 1.0: #very negative (Dancing With Your Ghost - Sasha Sloan)
         seed_tracks = '1TQXIltqoZ5XXyfCbAeSQQ'
         seed_artists = '4xnihxcoXWK3UqryOSnbw5'
+        bgimage = "https://i0.wp.com/twinpixelvideo.com/wp-content/uploads/2015/04/gradient-wallpapers-desktop-gradient-grey-wallpaper-generator-iphone-5-android-maker-wallpapers-hd-ios-7-deviantart-ipad.jpg?fit=1920%2C1200&ssl=1"
     elif magnitude == 0.0: #neutral/chill (Coffee - Quinn XCII)
         seed_tracks = '4CxmynXhw78QefruycvxG8'
         seed_artists = '3ApUX1o6oSz321MMECyIYd'
+        bgimage = "https://balochistan.gov.pk/wp-content/uploads/2019/05/beautiful-color-ui-gradients-backgrounds-endless-river-1.png"
     elif score < 0.0: #slightly negative (Born To Die - Lana Del Rey)
         seed_tracks = '487OPlneJNni3NWC8SYqhW'
         seed_artists = '00FQb4jTyendYWaN8pK0wa'
+        bgimage = "https://i.stack.imgur.com/7vMmx.jpg"
     else: #slightly positive (Free Love - HONNE)
         seed_tracks = '0GPJSHYaXh8rZSSJoUMgyl'
         seed_artists = '0Vw76uk7P8yVtTClWyOhac'
+        bgimage = "https://wallpaperaccess.com/full/340597.jpg"
 
     CLIENT_ID = str(os.environ["CLIENT_ID"])
     CLIENT_SECRET = str(os.environ["CLIENT_SECRET"])
@@ -145,5 +151,5 @@ def get_recommendations():
         info[i] = base + info[i][len("https://open.spotify.com/track/"):]
 
 
-    return render_template('results.html', spotify_link=info, album_image=image)
+    return render_template('results.html', spotify_link=info, album_image=image, bgimage = bgimage)
 
