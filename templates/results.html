@@ -24,16 +24,24 @@ body, html {
   background-repeat: no-repeat;
   background-size: cover;
 }
-h1,h2,h3,h4,h5,h6,p {
-    padding-top: 40px;
-    padding-bottom: 20px;
-    padding-block-start: 10px;
+h1,h3,h4,h5,h6,p {
+    padding: 10px;
     margin: 0px;
     color: #ffffff;
 }
 button {
   border: none;
   background: none;
+}
+h2 {
+  padding-top: 30px;
+  padding-bottom: 50px;
+  padding-left: 30px;
+}
+iframe {
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 </style>
 <body>
@@ -42,17 +50,20 @@ button {
      <button name="action1" value="LOGO"><img src="https://www.themusiclab.org/dist/0cfaeccbe50aacec32c5e79e5e495943.png" width = 70px height=70px></button>
   </form>
 </div>
-<div class="parallax"></div>
-<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
-  <div class="w3-display-bottomleft">
+<div class="parallax">
+  <div class="w3-display-topright">
     <iframe src="{{ spotify_link[0] }}" width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
   </div>
-  <div class="w3-display-topmiddle">
-    <p></p>
-    <h2 class="w3-animate-left">More recommendations</h2>
-    <p></p>
+</div>
+<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+  <div class="w3-display-top">
+    <h2 class="w3-animate-left">Other Picks to Fit Your Mood</h2>
     {% for i in range(1, 10) %}
-      <iframe src="{{ spotify_link[i] }}" width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      <div class="w3-third">
+        <p></p>
+        <iframe src="{{ spotify_link[i] }}" width="90%" height="300" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        <p></p>
+      </div>
     {% endfor %}
     <p></p>
   </div>
