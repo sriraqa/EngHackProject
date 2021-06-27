@@ -10,3 +10,17 @@ Enter your thoughts and we will recommend you music!
 - The user can also browse through other picks to see what else they might like. 
 - If the user finds something that they like, they can easily sample and share songs through our app to feel the vibes and spread their mood.
 
+## Screenshots:
+### **Search Screen**
+![Search Screen](./homepage.png)
+
+### **Top Pick Result**
+![Top Pick Screen](./top_pick.png)
+
+### **Other Picks**
+![Other Picks Screen](./other_picks.png)
+
+### **Share and Explore**
+![Share Screen](./share_option.png)
+
+Thank you for reading!
