@@ -14,10 +14,18 @@
 body,h1 {font-family: "Raleway", sans-serif}
 body, html {height: 100%}
 .bgimg {
-  background-image: url('https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/record-player-1605298086.jpg?crop=1.00xw:0.747xh;0,0.105xh&resize=1200:*');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.521), rgba(0, 0, 0, 0.521)), url('https://images.unsplash.com/photo-1488841714725-bb4c32d1ac94?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cmV0cm8lMjBtdXNpY3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80');
   min-height: 100%;
-  background-position: center;
+  background-blend-mode: saturation;
+  background-position: right;
   background-size: cover;
+}
+h1,h2,h3,h4,h5,h6,p {
+    padding-top: 40px;
+    padding-bottom: 20px;
+    padding-block-start: 10px;
+    margin: 0px;
+    color: #ffffff;
 }
 </style>
 <body>
@@ -25,10 +33,11 @@ body, html {height: 100%}
 <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
   <div class="w3-display-topleft w3-padding-large w3-xlarge">
     <form method="POST" action="/">
-        <button name="action1" value="LOGO"><img src="https://www.themusiclab.org/dist/0cfaeccbe50aacec32c5e79e5e495943.png" width = 50px height=50px></button>
+        <button name="action1" value="LOGO"><img src="https://www.themusiclab.org/dist/0cfaeccbe50aacec32c5e79e5e495943.png" width = 70px height=70px></button>
      </form>
   </div>
-  <div class="w3-display-middle">
+  <div class="w3-display-topmiddle">
+    <p></p>
     <h1 class="w3-jumbo w3-animate-opacity">MoodMelody</h1>
     <hr class="w3-border-grey" style="margin:auto;width:40%">
     <form class="flex-w flex-c-m contact100-form validate-form p-t-70" method="POST">
@@ -36,7 +45,6 @@ body, html {height: 100%}
         <input class="s1-txt1 placeholder0 input100" name="text-content" placeholder="What I'm thinking...">
         <span class="focus-input100"></span>
       </div>
-
     </form>			
 
   </div>
